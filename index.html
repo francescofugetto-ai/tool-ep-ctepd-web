@@ -1,0 +1,864 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Tool EP CTEPD">
+<meta name="theme-color" content="#FAF9F7">
+<script data-iphone="sentinella">
+(function(){
+var h=document.documentElement, msg="";
+function ha(c){ return (" "+h.className+" ").indexOf(" "+c+" ")>=0; }
+// L'errore puo' arrivare prima che l'avviso esista — uno script in <head> che
+// non si lascia leggere —: il messaggio si tiene da parte e si scrive quando
+// la pagina c'e'.
+function scrivi(){
+  var e=document.getElementById("nmerr");
+  if(e&&msg) e.textContent="Errore del motore: "+msg;
+}
+function ko(m){
+  if(m&&!msg) msg=m;
+  if(!ha("motore-ko")) h.className+=" motore-ko";
+  scrivi();
+}
+h.className+=" js";
+window.onerror=function(m,src,riga,col){
+  m=String(m);
+  if(/^Script error\.?$/.test(m)) m="il browser non ne mostra il dettaglio (\u00abScript error.\u00bb)";
+  ko(m+(riga?" (riga "+riga+(col?", colonna "+col:"")+")":""));
+};
+document.addEventListener("DOMContentLoaded",function(){
+  if(!ha("motore-ok")) ko(msg||"il motore non ha completato l'avvio"); else scrivi();
+});
+})();
+</script>
+<title>Dispnea dopo l'EP — il percorso della CTEPD</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  :root {
+    --bg:#FFFFFF; --surface:#FFFFFF; --surface-alt:#F7F7F5;
+    --border:rgba(11,11,11,0.10); --border-strong:rgba(11,11,11,0.18);
+    --text-primary:#0B0B0B; --text-secondary:#52514E; --text-muted:#76746F;
+    --accent-blue:#2A78D6;   --accent-blue-bg:#E6F1FB;   --accent-blue-border:#B5D4F4;
+    --accent-amber:#BA7517;  --accent-amber-bg:#FAEEDA;  --accent-amber-border:#FAC775;
+    --accent-red:#A32D2D;    --accent-red-bg:#FCEBEB;    --accent-red-border:#F7C1C1;
+    --accent-green:#3B6D11;  --accent-green-bg:#EAF3DE;  --accent-green-border:#C0DD97;
+    --accent-teal:#0E7C86;   --accent-teal-bg:#E2F4F5;   --accent-teal-border:#A7DBDE;
+    --accent-purple:#534AB7; --accent-purple-bg:#EEEDFE; --accent-purple-border:#CECBF6;
+    --pill-gray-bg:#F1EFE8;  --pill-gray-fg:#444441;
+    --cor-1:#3B8E5A; --cor-2a:#E0A82E; --cor-2b:#DE7E3C; --cor-3nb:#CE6D86; --cor-3h:#B33A3A;
+    --k0:#2E7D4F; --k0-bg:#E2F3E8; --k0-bd:#A6D9B8;
+    --k1:#2A78D6; --k1-bg:#E3EFFB; --k1-bd:#A9CBF1;
+    --k2:#8A6A00; --k2-bg:#FBF3C8; --k2-bd:#EBD56C;
+    --k3:#B45309; --k3-bg:#FDEBD8; --k3-bd:#F4BD85;
+    --k4:#A32D2D; --k4-bg:#FCE3E3; --k4-bd:#F0A9A9;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:ui-monospace,'SFMono-Regular',Consolas,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111418; --surface:#181C22; --surface-alt:#20252D;
+      --border:rgba(255,255,255,.10); --border-strong:rgba(255,255,255,.19);
+      --text-primary:#E7EAEE; --text-secondary:#B8BEC7; --text-muted:#949BA5;
+      --accent-blue:#72AAEE;   --accent-blue-bg:#18283A;   --accent-blue-border:#2E4B6C;
+      --accent-amber:#E3A94F;  --accent-amber-bg:#30250F;  --accent-amber-border:#5D4719;
+      --accent-red:#EF8E8E;    --accent-red-bg:#361B1B;    --accent-red-border:#6B3232;
+      --accent-green:#95C873;  --accent-green-bg:#1C2A13;  --accent-green-border:#3C5626;
+      --accent-teal:#6CC6CE;   --accent-teal-bg:#12292B;   --accent-teal-border:#285457;
+      --accent-purple:#ADA6F2; --accent-purple-bg:#23213B; --accent-purple-border:#454077;
+      --pill-gray-bg:#2A2F37;  --pill-gray-fg:#C9CED6;
+      --k0:#8FD3A8; --k0-bg:#132B1D; --k0-bd:#2D5A3E;
+      --k1:#8EC0F5; --k1-bg:#16283C; --k1-bd:#2F5378;
+      --k2:#EDD36A; --k2-bg:#2C260C; --k2-bd:#5E5120;
+      --k3:#F3B27A; --k3-bg:#33210F; --k3-bd:#6B4524;
+      --k4:#F29A9A; --k4-bg:#361B1B; --k4-bd:#6B3232;
+      color-scheme:dark;
+    }
+  }
+  body { font-family:var(--font); background:var(--bg); color:var(--text-primary); font-size:14.5px; line-height:1.65; -webkit-font-smoothing:antialiased; }
+  .page { max-width:920px; margin:0 auto; padding:0 16px 4rem; }
+  strong, b { font-weight:600; }
+  .muted { color:var(--text-muted); }
+
+  /* ── intestazione, come tool_ep ── */
+  .kicker { font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--text-muted); margin:1.6rem 0 8px; }
+  .headline { font-size:26px; font-weight:600; line-height:1.22; margin-bottom:10px; }
+  .oneline { font-size:13.5px; color:var(--text-secondary); line-height:1.65; margin-bottom:.9rem; }
+  .oneline strong { color:var(--text-primary); }
+  .meta-row { display:flex; flex-wrap:wrap; gap:6px 8px; font-size:12px; margin-bottom:1.1rem; }
+  .meta-chip { background:var(--surface); border:1px solid var(--border-strong); border-radius:12px; padding:2px 10px; color:var(--text-secondary); overflow-wrap:anywhere; }
+  .meta-chip strong { color:var(--text-primary); }
+
+  /* ── barra sticky ── */
+  .bar { position:-webkit-sticky;position:sticky; top:0; z-index:30; background:var(--bg); border-bottom:1px solid var(--border-strong);
+         margin:0 -16px 1rem; padding:8px 16px; display:flex; flex-wrap:wrap; align-items:center; gap:6px 10px; }
+  .bar .lbl { font-size:10.5px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); }
+  .bar .sp { flex:1 1 auto; }
+  .btn { font:600 12px var(--font); padding:6px 12px; border-radius:99px; border:1px solid var(--border-strong); background:var(--surface); color:var(--text-secondary); cursor:pointer; }
+  .btn:hover { border-color:var(--accent-blue); color:var(--accent-blue); }
+
+  /* ── passi ── */
+  .stage { display:flex; align-items:center; gap:10px; margin:1.8rem 0 .6rem; }
+  .stage-n { width:29px; height:29px; border-radius:50%; background:var(--text-primary); color:var(--bg);
+             font-weight:700; font-size:13.5px; display:flex; align-items:center; justify-content:center; flex:0 0 auto; }
+  .stage-t { font-size:16.5px; font-weight:700; line-height:1.3; }
+  .stage-w { margin-left:auto; font-size:11.5px; color:var(--text-muted); background:var(--surface-alt); border-radius:99px; padding:3px 10px; text-align:right; }
+  .card { background:var(--surface); border:1px solid var(--border-strong); border-radius:12px; padding:13px 15px; margin-bottom:12px; }
+  .card h3 { font-size:13px; font-weight:600; letter-spacing:.02em; margin-bottom:8px; color:var(--text-secondary); }
+  .card h4 { font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:var(--text-muted); margin:10px 0 2px; }
+  .row { display:flex; flex-wrap:wrap; align-items:center; gap:8px 16px; margin-bottom:10px; }
+  .row:last-child { margin-bottom:0; }
+  .fl { font-size:12.5px; font-weight:600; color:var(--text-secondary); min-width:170px; flex:0 1 250px; }
+  .fl small { display:block; font-weight:400; color:var(--text-muted); font-size:11.5px; line-height:1.45; }
+  input[type=number] { font:600 15px var(--font); color:var(--text-primary); background:var(--surface); border:1px solid var(--border-strong); border-radius:8px; padding:6px 9px; width:96px; text-align:center; }
+  .unit { font-size:12.5px; color:var(--text-muted); }
+  .seg { display:inline-flex; flex-wrap:wrap; border:1px solid var(--border-strong); border-radius:10px; overflow:hidden; max-width:100%; }
+  .seg label { position:relative; cursor:pointer; }
+  .seg input { position:absolute; opacity:0; width:1px; height:1px; }
+  .seg span { display:block; padding:6px 12px; font-size:13px; font-weight:500; color:var(--text-secondary); border-right:1px solid var(--border); }
+  .seg label:last-child span { border-right:none; }
+  .seg input:checked + span { background:var(--text-primary); color:var(--bg); }
+  .seg input:focus-visible + span { outline:2px solid var(--accent-blue); outline-offset:-2px; }
+  .chk { display:flex; align-items:flex-start; gap:9px; padding:6px 0; font-size:13.5px; line-height:1.45; border-bottom:1px dashed var(--border); cursor:pointer; }
+  .chk:last-child { border-bottom:none; }
+  .chk input { margin-top:3px; width:17px; height:17px; flex:0 0 auto; accent-color:var(--accent-teal); }
+  .chk small { display:block; color:var(--text-muted); font-size:11.5px; }
+  .chk.on { color:var(--accent-teal); }
+  .tre { display:grid; grid-template-columns:1fr 1fr 1fr; gap:4px 14px; }
+  .hide { display:none !important; }
+
+  /* ── uscite ── */
+  .esito { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; margin-bottom:4px; }
+  .cat { display:inline-block; font-size:12.5px; font-weight:600; border-radius:99px; padding:2px 10px; border:1px solid; overflow-wrap:anywhere; }
+  .k0 { color:var(--k0); background:var(--k0-bg); border-color:var(--k0-bd); }
+  .k1 { color:var(--k1); background:var(--k1-bg); border-color:var(--k1-bd); }
+  .k2 { color:var(--k2); background:var(--k2-bg); border-color:var(--k2-bd); }
+  .k3 { color:var(--k3); background:var(--k3-bg); border-color:var(--k3-bd); }
+  .k4 { color:var(--k4); background:var(--k4-bg); border-color:var(--k4-bd); }
+  .kx { color:var(--text-muted); background:var(--surface-alt); border-color:var(--border-strong); }
+  .big { font-size:22px; font-weight:700; line-height:1.2; }
+  .via { font-family:var(--mono); font-size:12px; color:var(--text-secondary); margin:2px 0 8px; overflow-wrap:anywhere; }
+  .cor { display:inline; min-width:30px; text-align:center; padding:1px 6px; border-radius:6px; font-weight:700; font-size:10.5px; color:#FFFFFF; vertical-align:1px; white-space:nowrap; }
+  .cor-1 { background:var(--cor-1); } .cor-2a { background:var(--cor-2a); color:#3A2D00; } .cor-2b { background:var(--cor-2b); }
+  .cor-3nb { background:var(--cor-3nb); } .cor-3h { background:var(--cor-3h); }
+  .cnc { background:var(--surface-alt); color:var(--text-secondary); border:1px solid var(--border-strong); font-weight:600; }
+  .loe { display:inline; padding:1px 7px; border-radius:99px; font-size:9.5px; font-weight:600; background:var(--pill-gray-bg); color:var(--pill-gray-fg); border:.5px solid var(--border-strong); vertical-align:1px; white-space:nowrap; }
+  .pg { font-size:11px; color:var(--text-muted); }
+  .nota { border-left:3px solid var(--accent-amber); background:var(--accent-amber-bg); border-radius:0 8px 8px 0; padding:7px 11px; margin-top:8px; font-size:13px; line-height:1.55; }
+  .nota.info { border-left-color:var(--accent-blue); background:var(--accent-blue-bg); }
+  .nota.stop { border-left-color:var(--accent-red); background:var(--accent-red-bg); }
+  .nota.ok { border-left-color:var(--accent-green); background:var(--accent-green-bg); }
+  .nota.confine { border-left-color:var(--accent-purple); background:var(--accent-purple-bg); }
+  .nota strong, .nota b { color:var(--text-primary); }
+  .riga { display:flex; gap:10px; padding:8px 0; border-bottom:1px dashed var(--border); }
+  .riga:last-child { border-bottom:none; }
+  .riga .ico { flex:0 0 22px; font-weight:700; text-align:center; font-family:var(--mono); font-size:13px; padding-top:1px; }
+  .riga .tx { flex:1 1 auto; font-size:13.5px; min-width:0; overflow-wrap:anywhere; }
+  .riga.si .ico { color:var(--k0); }
+  .riga.no .ico { color:var(--text-muted); }
+  .riga.no .tx { color:var(--text-muted); }
+  .riga.nd .ico { color:var(--accent-amber); }
+  .riga.esc .ico { color:var(--accent-purple); font-size:11px; }
+  .lista li { margin:4px 0 4px 18px; font-size:13px; }
+  .foot { margin-top:2.4rem; padding-top:1rem; border-top:1px solid var(--border-strong); font-size:11.5px; color:var(--text-muted); line-height:1.7; }
+  .foot strong { color:var(--text-secondary); }
+  @media (max-width:640px) {
+    .tre { grid-template-columns:1fr; }
+    .headline { font-size:22px; }
+    .stage-w { display:none; }
+    .fl { min-width:0; flex:1 1 100%; }
+    .big { font-size:19px; }
+    .page { overflow-wrap:anywhere; }
+  }
+  @media print { .bar { position:static; } }
+</style>
+<style data-iphone="stile">
+/* L'avviso e' visibile per costruzione: lo nasconde solo la classe che la
+   sentinella mette quando JavaScript esiste, e lo rimostra quando il motore
+   muore. Nell'anteprima dell'iPhone nessuna delle due arriva. */
+#nomotore{background:#FCEBEB;border:1.5px solid #A32D2D;border-radius:10px;
+ padding:12px 15px;margin:0 0 1.1rem;font-size:13.5px;line-height:1.6;color:#0B0B0B;
+ font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+#nomotore strong{display:block;color:#A32D2D;font-size:15px;margin-bottom:4px}
+#nomotore p{margin:6px 0 0}
+#nomotore a{color:#A32D2D}
+#nomotore .nmurl{font-family:'SFMono-Regular',Consolas,Menlo,monospace;font-size:.92em;word-break:break-all}
+#nomotore .nmerr{display:block;font-family:'SFMono-Regular',Consolas,Menlo,monospace;
+ font-size:11.5px;color:#A32D2D;margin-top:6px;word-break:break-word}
+#nomotore .nmerr:empty{display:none}
+html.js #nomotore{display:none}
+html.js.motore-ko #nomotore{display:block}
+</style>
+</head>
+<body>
+<div class="nomotore" id="nomotore" role="alert">
+ <strong>Motore di calcolo non attivo</strong>
+ <p>I calcoli, i filtri e i comandi di questa pagina <b>non funzionano</b>: dove leggi «—» non c'è un
+ valore. Il testo resta leggibile, i numeri che dipendono dai tuoi dati no. Non usare questa pagina
+ per decidere una dose.</p>
+ <p>Su iPhone e iPad succede sempre con un file salvato sul telefono: si apre nell'<b>anteprima</b> —
+ dall'app File, da Mail, da WhatsApp —, che mostra la pagina ma non esegue il motore, e Apple non
+ permette di aprirlo in Safari. Sull'iPhone il tool funziona aperto da questo indirizzo, in Safari: <a class="nmurl" href="https://francescofugetto-ai.github.io/tool-ep-ctepd-web/">https://francescofugetto-ai.github.io/tool-ep-ctepd-web/</a> — poi Condividi, «Aggiungi alla schermata Home». Dopo la prima apertura funziona anche senza rete. Su computer e Android basta aprire il file.</p>
+ <span class="nmerr" id="nmerr"></span>
+</div>
+<div class="page">
+
+<div class="kicker">Strumento · Embolia polmonare · AHA/ACC 2026</div>
+<h1 class="headline">Dispnea persistente dopo l'EP: il percorso della CTEPD</h1>
+<p class="oneline"><strong>Come si usa.</strong> Per chi, dopo un'EP acuta, ha ancora <strong>dispnea o limitazione funzionale</strong>. Il passo 1 dice se la Fig. 8 si applica (≥3 mesi di anticoagulazione terapeutica). Nei passi 2–4 segni gli esami che hai — <strong>CPET</strong>, <strong>scintigrafia perfusionale</strong>, <strong>ecocardiogramma</strong> con TRV e segni di ipertensione polmonare —: un esame non segnato vale «non eseguito». Ne escono il ramo della figura (CTEPD <strong>esclusa, possibile o probabile</strong>), il passo successivo e le raccomandazioni con classe e pagina, fino all'<strong>invio al centro esperto</strong>, dove lo strumento si ferma. La ESC 2019 compare solo dove decide diversamente. Nessuna dose. <strong>Azzera</strong>, in alto, ricomincia.</p>
+<div class="meta-row">
+  <span class="meta-chip"><strong>Fonte</strong> AHA/ACC 2026, EP acuta dell'adulto · ESC 2019 accanto</span>
+  <span class="meta-chip"><strong>Calcolo</strong> Fig. 8 p. e1028 e note pp. e1028–e1029 · Tab. 10 p. e1029 · raccomandazioni pp. e1025–e1026 · ESC 2019 Fig. 8 p. 586, racc. 10.4 p. 587, Tab. 13 p. 584, Suppl. Tab. 17–18 p. 15</span>
+</div>
+
+<div class="bar" id="bar" aria-live="polite">
+  <span class="lbl">CTEPD</span> <span id="barCtepd" class="cat kx">—</span>
+  <span class="lbl">Passo</span> <span id="barPasso" class="cat kx">—</span>
+  <span class="lbl">Eco</span> <span id="barEco" class="cat kx">—</span>
+  <span class="sp"></span>
+  <button class="btn" id="azzera" type="button">Azzera</button>
+</div>
+
+<div class="stage"><span class="stage-n">1</span><span class="stage-t">Il paziente</span><span class="stage-w">Fig. 8 · n. 1, p. e1025</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">Anticoagulazione terapeutica dopo l'EP acuta<small>da quanto dura</small></span>
+    <span class="seg">
+      <label><input type="radio" name="tempo" value="lt3"><span>meno di 3 mesi</span></label>
+      <label><input type="radio" name="tempo" value="ge3"><span>3 mesi o più</span></label>
+    </span>
+  </div>
+  <div class="row">
+    <span class="fl">Dispnea e/o limitazione funzionale</span>
+    <span class="seg">
+      <label><input type="radio" name="sint" value="si"><span>persistono</span></label>
+      <label><input type="radio" name="sint" value="no"><span>risolte o assenti</span></label>
+    </span>
+  </div>
+  <label class="chk" id="rigaEmo"><input type="checkbox" id="emo"><span>Anticoagulazione controindicata per alto rischio emorragico<small>l'eccezione della raccomandazione n. 5 (p. e1026)</small></span></label>
+</div>
+
+<div id="blkEsami">
+<div class="stage"><span class="stage-n">2</span><span class="stage-t">CPET non invasivo</span><span class="stage-w">nota * della Fig. 8, p. e1028 · p. e1027</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">Limitazione vascolare polmonare (PVD)<small>compromissione circolatoria con anomalie dello stroke volume (polso d'O₂) e di VD/VT e/o VE/VCO₂ — nota * della Fig. 8</small></span>
+    <span class="seg">
+      <label><input type="radio" name="cpet" value="nd"><span>non eseguito</span></label>
+      <label><input type="radio" name="cpet" value="no"><span>senza limitazione vascolare</span></label>
+      <label><input type="radio" name="cpet" value="si"><span>con limitazione vascolare</span></label>
+    </span>
+  </div>
+</div>
+
+<div class="stage"><span class="stage-n">3</span><span class="stage-t">Scintigrafia perfusionale</span><span class="stage-w">nota ‡ della Fig. 8, p. e1028</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">V/Q planare, V/Q SPECT o SPECT/TC<small>anomala = qualunque difetto di perfusione non concordante (mismatch), nota ‡</small></span>
+    <span class="seg">
+      <label><input type="radio" name="perf" value="nd"><span>non eseguita</span></label>
+      <label><input type="radio" name="perf" value="norm"><span>normale</span></label>
+      <label><input type="radio" name="perf" value="anom"><span>anomala</span></label>
+    </span>
+  </div>
+</div>
+
+<div class="stage"><span class="stage-n">4</span><span class="stage-t">Ecocardiogramma transtoracico</span><span class="stage-w">nota § della Fig. 8, p. e1028 · Tab. 10, p. e1029</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">TTE a ≥3 mesi<small>omessa: si può, se era normale all'EP acuta (nota * delle raccomandazioni, p. e1026)</small></span>
+    <span class="seg">
+      <label><input type="radio" name="ecoSt" value="nd"><span>non eseguita</span></label>
+      <label><input type="radio" name="ecoSt" value="fatta"><span>eseguita</span></label>
+      <label><input type="radio" name="ecoSt" value="omessa"><span>omessa: normale all'EP acuta</span></label>
+    </span>
+  </div>
+  <div id="blkEco">
+    <div class="row">
+      <span class="fl">Velocità del rigurgito tricuspidale (TRV)<small>picco, m/s</small></span>
+      <input type="number" id="trv" min="1" max="6" step="0.01" inputmode="decimal" placeholder="es. 2,6"> <span class="unit">m/s</span>
+    </div>
+    <label class="chk" id="rigaTrvNm"><input type="checkbox" id="trvNm"><span>TRV non misurabile</span></label>
+    <h4>Segni di PH — conta la categoria: ne servono almeno due (A, B, C)</h4>
+    <div class="tre">
+      <div>
+        <h4>A · Ventricoli</h4>
+        <label class="chk"><input type="checkbox" id="sA1"><span>Rapporto VD/VS basale (diametro o area) &gt;1,0</span></label>
+        <label class="chk"><input type="checkbox" id="sA2"><span>Setto interventricolare appiattito<small>indice di eccentricità del VS &gt;1,1 in sistole e/o diastole</small></span></label>
+        <label class="chk"><input type="checkbox" id="sA3"><span>TAPSE/sPAP &lt;0,55 mm/mmHg<small>non è nella Suppl. Tab. 18 ESC 2019</small></span></label>
+      </div>
+      <div>
+        <h4>B · Arteria polmonare</h4>
+        <label class="chk"><input type="checkbox" id="sB1"><span>Tempo di accelerazione nell'efflusso del VD &lt;105 ms e/o notching mesosistolico</span></label>
+        <label class="chk"><input type="checkbox" id="sB2"><span>Rigurgito polmonare protodiastolico &gt;2,2 m/s</span></label>
+        <label class="chk"><input type="checkbox" id="sB3"><span>Arteria polmonare più larga della radice aortica<small>non è nella Suppl. Tab. 18 ESC 2019</small></span></label>
+        <label class="chk"><input type="checkbox" id="sB4"><span>Arteria polmonare &gt;25 mm</span></label>
+      </div>
+      <div>
+        <h4>C · Vena cava inferiore e atrio destro</h4>
+        <label class="chk"><input type="checkbox" id="sC1"><span>Vena cava inferiore &gt;21 mm con collasso inspiratorio ridotto<small>&lt;50% con lo sniff o &lt;20% a respiro tranquillo</small></span></label>
+        <label class="chk"><input type="checkbox" id="sC2"><span>Area dell'atrio destro in telesistole &gt;18 cm²</span></label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="blkPh">
+<div class="stage"><span class="stage-n">5</span><span class="stage-t">Se il cateterismo destro è già stato fatto</span><span class="stage-w">n. 7 e 8, p. e1026</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">Ipertensione polmonare al cateterismo destro<small>decide fra la classe 1 e la 2a dell'invio; non si deduce dall'eco</small></span>
+    <span class="seg">
+      <label><input type="radio" name="ph" value="si"><span>presente</span></label>
+      <label><input type="radio" name="ph" value="no"><span>assente</span></label>
+    </span>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="stage"><span class="stage-n">6</span><span class="stage-t">Solo per il confronto con la ESC 2019</span><span class="stage-w">Fig. 8 p. 586 · Tab. 13 p. 584</span></div>
+<div class="card">
+  <div class="row">
+    <span class="fl">NT-proBNP<small>la figura ESC non dà una soglia</small></span>
+    <span class="seg">
+      <label><input type="radio" name="ntpro" value="si"><span>elevato</span></label>
+      <label><input type="radio" name="ntpro" value="no"><span>non elevato</span></label>
+    </span>
+  </div>
+  <div class="row">
+    <span class="fl">Fattori di rischio per CTEPH (Tab. 13)<small>EP o TVP pregresse; trombi grandi all'angio-TC; segni eco di PH o di disfunzione del VD all'esordio; angio-TC che suggerisce malattia cronica preesistente; shunt ventricolo-atriali; cateteri venosi cronici o pacemaker infetti; splenectomia; trombofilia, in particolare sindrome da antifosfolipidi e fattore VIII alto; gruppo sanguigno non 0; ipotiroidismo in terapia sostitutiva; neoplasia; sindromi mieloproliferative; malattia infiammatoria intestinale; osteomielite cronica</small></span>
+    <span class="seg">
+      <label><input type="radio" name="rf" value="si"><span>almeno uno</span></label>
+      <label><input type="radio" name="rf" value="no"><span>nessuno</span></label>
+    </span>
+  </div>
+</div>
+
+<div class="stage"><span class="stage-n">→</span><span class="stage-t">Che cosa fare</span><span class="stage-w">AHA/ACC 2026</span></div>
+<div class="card" id="outPerc"></div>
+<div class="card" id="outPasso"></div>
+<div class="card" id="outEco"></div>
+<div class="card" id="outRacc"></div>
+<div class="card"><h3>ESC 2019 — solo dove decide diversamente</h3><div id="outEsc"></div></div>
+<div class="card"><h3>Incoerenze e lacune della fonte toccate da questo caso</h3><div id="outInc"></div></div>
+<div class="card"><h3>Limiti per questo paziente</h3><ul class="lista" id="limiti"></ul></div>
+
+<div class="foot">
+  <strong>Fonti.</strong> 2026 AHA/ACC/ACCP/ACEP/CHEST/SCAI/SHM/SIR/SVM/SVN Guideline for the Evaluation and Management of Acute Pulmonary Embolism in Adults. <em>Circulation</em> 2026;153:e977–e1051 — § 6.1, pazienti con sintomi persistenti dopo l'EP acuta: raccomandazioni pp. e1025–e1026, testo pp. e1026–e1029, Fig. 8 p. e1028 con le note alle pp. e1028–e1029, Tab. 10 p. e1029.
+  2019 ESC Guidelines for the diagnosis and management of acute pulmonary embolism, developed in collaboration with the ERS. <em>Eur Heart J</em> 2020;41:543–603, e il supplementare — Tab. 13 p. 584, Fig. 8 p. 586, raccomandazioni 10.4 p. 587, Suppl. Tab. 17–18 p. 15. Le fasce della Suppl. Tab. 17 sono le stesse della Fig. 5 della ESC/ERS 2022 sull'ipertensione polmonare (p. 3645), a cui rimanda la nota della Fig. 8 AHA/ACC. Le pagine sono quelle stampate. Ogni esito porta la sua.<br><br>
+  Strumento personale di studio e consultazione: <strong>non sostituisce il giudizio clinico</strong>. Indirizza un percorso diagnostico e si ferma all'invio al centro esperto: la diagnosi e la terapia della CTEPH sono dell'ipertensione polmonare. Non contiene dosi. Non salva i dati e non li invia in rete.
+</div>
+
+</div>
+<script>
+(function () {
+  "use strict";
+
+  /* ═══ DATI ═══════════════════════════════════════════════════════════════
+     AHA/ACC 2026, EP acuta dell'adulto (pagine stampate: PDF + 976).
+
+     Fig. 8, p. e1028 — «Evaluating Ongoing Symptoms Following Acute PE»,
+     letta sull'immagine connettore per connettore:
+       sintomi persistenti >=3 mesi dopo l'EP acuta
+         ├→ CPET non invasivo [2a] → PVD?* ── NO → CTEPD esclusa† [2a]
+         │                              └─ SI' → TTE + V/Q o SPECT/CT
+         └→ TTE + V/Q o SPECT/CT [2a]
+              ├→ perfusione normale → CTEPD esclusa† (riquadro senza colore)
+              ├→ perfusione anomala‡ + eco a bassa probabilita'§ → CTEPD possibile
+              │     ├→ valutazione esperta (freccia diretta)
+              │     └→ CPET non invasivo [2a] → PVD?* ── NO → CTEPD esclusa† (senza colore)
+              │                                    └─ SI' → valutazione esperta
+              └→ perfusione anomala‡ + eco ad alta probabilita'§ → CTEPD probabile
+                    └→ valutazione esperta
+       valutazione esperta = «CTEPD con PH [1]» OPPURE «CTEPD senza PH [2a]»,
+         con angiografia polmonare‖ e cateterismo destro ± da sforzo.
+     Note, pp. e1028–e1029:
+       *  PVD: compromissione circolatoria con anomalie dello stroke volume
+          (polso d'O2) e di VD/VT e/o VE/VCO2;
+       †  esclusa la CTEPD, le altre cause dei sintomi vanno cercate;
+       ‡  perfusione positiva = qualunque difetto non concordante;
+       §  bassa probabilita': TRV <=2,8 m/s e nessun segno di PH (Tab. 10);
+          probabilita' piu' alta: TRV >=2,8 m/s e segni di PH (Tab. 10);
+          continuazione a p. e1029: eco ad alto rischio = probabilita'
+          intermedia o alta dei criteri ERS 2022, a basso rischio = bassa;
+       ‖  angiografia TC o invasiva, a scelta del clinico secondo il centro.
+     Tab. 10, p. e1029: segni in tre categorie (A ventricoli, B arteria
+       polmonare, C vena cava inferiore e atrio destro); «servono segni di
+       almeno 2 categorie per cambiare il livello di probabilita'».
+     Raccomandazioni, griglia raccomandazioni.json, pp. e1025–e1026:
+       n. 1 valutazione per la CTEPD dopo >=3 mesi ................ 1 B-NR
+       n. 2 TTE + perfusione piuttosto che la sola eco ............ 2a B-NR
+       n. 3 CPET per escludere la CTEPD .......................... 2a B-NR
+       n. 4 angio-TC o perfusione di controllo senza sintomi ...... 3: No Benefit B-NR
+       n. 5 anticoagulazione fino alla fine della valutazione .... 1 B-NR
+       n. 6 riabilitazione polmonare con CTEPD esclusa ........... 1 B-R («is reasonable»)
+       n. 7 CTEPD con PH: invio al centro esperto ................ 1 C-LD
+       n. 8 CTEPD senza PH, selezionati: invio ................... 2a C-LD
+       nota * alla tabella: eco normale all'EP acuta → ripeterla a 3–6 mesi
+       rende poco e si puo' omettere (p. e1026).
+
+     ESC 2019 (pagine stampate: PDF + 542), solo per il confronto:
+       Fig. 8, p. 586: dispnea a 3–6 mesi → TTE, probabilita' di PH →
+         bassa: cause alternative (nota f: considerare il CPET);
+         intermedia: V/Q se >=1 fra NT-proBNP elevato, fattori di rischio per
+         CTEPH (Tab. 13) e CPET anormale, altrimenti cause alternative;
+         alta: V/Q. V/Q con difetti non concordanti → centro PH/CTEPH;
+         V/Q senza → cause alternative. Asintomatico con >=1 fattore: TTE
+         da considerare.
+       Raccomandazioni 10.4, p. 587: valutazione a 3–6 mesi I B; invio al
+         centro PH/CTEPH del sintomatico con difetti non concordanti oltre i 3
+         mesi I C; ulteriore valutazione nel sintomatico IIa C; nell'asinto-
+         matico con fattori di rischio IIb C.
+       Suppl. Tab. 17, p. 15: TRV <=2,8 o non misurabile, senza segni → bassa;
+         con segni → intermedia; 2,9–3,4 senza segni → intermedia; con segni →
+         alta; >3,4 → alta. Le stesse fasce della Fig. 5 ESC/ERS 2022, p. 3645.
+       Suppl. Tab. 18, p. 15: gli stessi segni della Tab. 10 AHA, senza
+         TAPSE/sPAP e senza «arteria polmonare > radice aortica». */
+  var R = {  // [classe AHA, LOE, dove] — classi nel sistema AHA, mai convertite
+    valuta:    ["1",   "B-NR", "p. e1025, n. 1"],
+    tteperf:   ["2a",  "B-NR", "p. e1025, n. 2"],
+    cpet:      ["2a",  "B-NR", "p. e1025, n. 3"],
+    controllo: ["3nb", "B-NR", "p. e1025, n. 4"],
+    anticoag:  ["1",   "B-NR", "p. e1026, n. 5"],
+    riab:      ["1",   "B-R",  "p. e1026, n. 6"],
+    espPh:     ["1",   "C-LD", "p. e1026, n. 7"],
+    espNoPh:   ["2a",  "C-LD", "p. e1026, n. 8"]
+  };
+  var RE = {  // [classe ESC, livello] — raccomandazioni 10.4, p. 587
+    invio:  ["I",   "C"],
+    asint:  ["IIb", "C"]
+  };
+  var SEGNI = [  // Tab. 10, p. e1029; esc = presente nella Suppl. Tab. 18 ESC 2019, p. 15
+    { id:"sA1", cat:"A", esc:true  },  // RV/LV basale >1,0
+    { id:"sA2", cat:"A", esc:true  },  // setto appiattito, LVEI >1,1
+    { id:"sA3", cat:"A", esc:false },  // TAPSE/sPAP <0,55 mm/mmHg
+    { id:"sB1", cat:"B", esc:true  },  // RVOT AT <105 ms e/o notching
+    { id:"sB2", cat:"B", esc:true  },  // rigurgito polmonare protodiastolico >2,2 m/s
+    { id:"sB3", cat:"B", esc:false },  // AP > radice aortica
+    { id:"sB4", cat:"B", esc:true  },  // AP >25 mm
+    { id:"sC1", cat:"C", esc:true  },  // VCI >21 mm con collasso ridotto
+    { id:"sC2", cat:"C", esc:true  }   // area AD >18 cm2
+  ];
+  var TRV = { basso:2.8, alto:3.4 };  // nota §, p. e1028; Suppl. Tab. 17, p. 15
+  var MIN_CAT = 2;                    // Tab. 10, nota *, p. e1029
+  var DOM = { trv:[1, 6] };           // limite di plausibilita' dello strumento, non della fonte
+
+  /* ═══ FUNZIONI PURE ═══════════════════════════════════════════════════ */
+  function pulisci(s) {
+    var c = {}, k, i;
+    for (k in s) if (s.hasOwnProperty(k)) c[k] = s[k];
+    c.fuoriDom = [];
+    if (c.trv !== null && c.trv !== undefined && (c.trv < DOM.trv[0] || c.trv > DOM.trv[1])) { c.fuoriDom.push("trv"); c.trv = null; }
+    c.trvIgnorato = !!(c.trvNm && c.trv !== null && c.trv !== undefined);
+    if (c.trvNm) c.trv = null;
+    if (c.ecoSt !== "fatta") {
+      c.trv = null; c.trvNm = false; c.trvIgnorato = false;
+      for (i = 0; i < SEGNI.length; i++) c[SEGNI[i].id] = false;
+    }
+    // gli esami entrano solo nella Fig. 8: sintomi persistenti a >=3 mesi
+    if (!(c.sint === "si" && c.tempo === "ge3")) { c.cpet = ""; c.perf = ""; c.ecoSt = ""; c.trv = null; c.trvNm = false; c.ph = ""; }
+    return c;
+  }
+
+  function livello(fascia, segni) {
+    if (fascia === "le28") return segni ? "intermedia" : "bassa";
+    if (fascia === "mid") return segni ? "alta" : "intermedia";
+    return "alta";
+  }
+
+  function eco(s) {
+    var o = { stato:s.ecoSt || "nd" }, i, k, cat = { A:false, B:false, C:false }, catE = { A:false, B:false, C:false };
+    if (o.stato !== "fatta") return o;
+    if (s.trv === null && !s.trvNm) { o.stato = "incompleta"; o.perche = "serve la velocità del rigurgito tricuspidale (TRV), oppure «TRV non misurabile»"; return o; }
+    o.stato = "ok";
+    for (i = 0; i < SEGNI.length; i++) if (s[SEGNI[i].id]) { cat[SEGNI[i].cat] = true; if (SEGNI[i].esc) catE[SEGNI[i].cat] = true; }
+    o.cat = []; o.catEsc = [];
+    var ABC = ["A", "B", "C"];
+    for (i = 0; i < 3; i++) { k = ABC[i]; if (cat[k]) o.cat.push(k); if (catE[k]) o.catEsc.push(k); }
+    o.nm = !!s.trvNm; o.trv = o.nm ? null : s.trv;
+    o.fascia = (o.nm || o.trv <= TRV.basso) ? "le28" : (o.trv <= TRV.alto ? "mid" : "gt34");
+    o.segni = o.cat.length >= MIN_CAT; o.segniEsc = o.catEsc.length >= MIN_CAT;
+    o.livello = livello(o.fascia, o.segni); o.livelloEsc = livello(o.fascia, o.segniEsc);
+    o.ramo = o.livello === "bassa" ? "bassa" : "alta";
+    // la nota § alla lettera
+    o.lettBassa = !o.nm && o.trv <= TRV.basso && !o.segni;
+    o.lettAlta = !o.nm && o.trv >= TRV.basso && o.segni;
+    o.fuoriLettera = !o.lettBassa && !o.lettAlta;
+    o.e28 = !o.nm && o.trv === TRV.basso;
+    o.tra = !o.nm && o.trv > TRV.basso && o.trv < 2.9;
+    return o;
+  }
+
+  // la Fig. 8 AHA/ACC, p. e1028
+  function percorso(s, E) {
+    var o = { via:[], passo:"", esito:null, esperto:false, lettura:false, conflitto:"", escluBy:"" };
+    if (!s.tempo) { o.perche = "indicare da quanto dura l'anticoagulazione terapeutica dopo l'EP acuta"; return o; }
+    if (!s.sint) { o.perche = "indicare se la dispnea o la limitazione funzionale persistono"; return o; }
+    if (s.sint === "no") { o.stato = "asintomatico"; o.passo = "nessunImaging"; return o; }
+    if (s.tempo === "lt3") { o.stato = "presto"; o.passo = "a3mesi"; return o; }
+    o.stato = "fig8";
+    o.via.push("sintomi persistenti ≥3 mesi");
+    var C = s.cpet || "nd", P = s.perf || "nd";
+    var eOk = E.stato === "ok", alta = eOk && E.ramo === "alta", bassa = eOk && E.ramo === "bassa";
+    var eTxt = eOk ? (alta ? "eco a probabilità più alta" : "eco a bassa probabilità") : "eco non disponibile";
+    var cTxt = C === "no" ? "CPET senza limitazione vascolare" : C === "si" ? "CPET con limitazione vascolare" : "";
+
+    if (P === "norm") {
+      if (C === "si") o.via.push(cTxt);
+      o.via.push("perfusione normale", "CTEPD esclusa");
+      o.esito = "esclusa"; o.escluBy = "perf"; o.passo = "altreCause";
+      return o;
+    }
+    if (P === "anom") {
+      if (alta) {
+        if (C === "si") o.via.push(cTxt);
+        o.via.push("perfusione anomala + " + eTxt, "CTEPD probabile", "valutazione esperta");
+        o.esito = "probabile"; o.passo = "esperto"; o.esperto = true;
+        if (C === "no") { o.conflitto = "cpetPerfEco"; o.lettura = true; }
+        return o;
+      }
+      if (bassa) {
+        o.via.push("perfusione anomala + " + eTxt, "CTEPD possibile");
+        if (C === "si") { o.via.push(cTxt, "valutazione esperta"); o.esito = "possibile"; o.passo = "esperto"; o.esperto = true; }
+        else if (C === "no") { o.via.push(cTxt, "CTEPD esclusa"); o.esito = "esclusa"; o.escluBy = "cpetBasso"; o.passo = "altreCause"; }
+        else { o.esito = "possibile"; o.passo = "espertoOcpet"; }
+        return o;
+      }
+      // probabilita' ecocardiografica non disponibile
+      if (C === "si") {
+        o.via.push(cTxt, "perfusione anomala + " + eTxt, "CTEPD possibile o probabile", "valutazione esperta");
+        o.esito = "possProb"; o.passo = "esperto"; o.esperto = true; o.senzaEco = true;
+        return o;
+      }
+      o.via.push("perfusione anomala + " + eTxt);
+      o.passo = "tte";
+      if (C === "no") { o.via.push(cTxt); o.perche = "con la perfusione anomala e il CPET senza limitazione vascolare decide l'eco: bassa probabilità → esclusa, più alta → probabile"; }
+      else { o.esito = "possProb"; o.via.push("CTEPD possibile o probabile"); }
+      return o;
+    }
+    // perfusione non eseguita
+    if (C === "no") {
+      o.via.push(cTxt);
+      if (alta) { o.via.push(eTxt); o.conflitto = "cpetEco"; o.lettura = true; o.passo = "perf"; o.perche = "CPET senza limitazione vascolare ma eco a probabilità più alta: la figura non prevede i due esami insieme"; }
+      else { o.via.push("CTEPD esclusa"); o.esito = "esclusa"; o.escluBy = "cpetTop"; o.passo = "altreCause"; }
+      return o;
+    }
+    var ecoFatta = E.stato === "ok" || E.stato === "incompleta" || E.stato === "omessa";
+    if (C === "si") { o.via.push(cTxt, "TTE + perfusione"); o.passo = ecoFatta ? "perf" : "tteperf"; o.perche = "serve la perfusione"; return o; }
+    o.passo = ecoFatta ? "perfOcpet" : "ingresso";
+    o.perche = ecoFatta ? "serve la perfusione (oppure, prima, il CPET)" : "nessun esame ancora: i due ingressi della figura";
+    return o;
+  }
+
+  // ESC 2019, Fig. 8 p. 586: la V/Q si fa?
+  function escVq(s, E) {
+    if (E.stato !== "ok") return { q:"eco" };
+    var L = E.livelloEsc, f = [], ign = [];
+    if (L === "alta") return { q:"si", L:L };
+    if (L === "bassa") return { q:"no", L:L };
+    if (s.ntpro === "si") f.push("NT-proBNP elevato");
+    if (s.rf === "si") f.push("un fattore di rischio della Tab. 13");
+    if (s.cpet === "si") f.push("CPET anormale");
+    if (f.length) return { q:"si", L:L, f:f };
+    if (!s.ntpro) ign.push("il NT-proBNP");
+    if (!s.rf) ign.push("i fattori di rischio della Tab. 13");
+    if (s.cpet === "no") ign.push("un CPET anormale nel senso della ESC, più largo della limitazione vascolare");
+    return { q:ign.length ? "forse" : "no", L:L, ign:ign };
+  }
+  function vqTesto(V) {
+    if (V.q === "eco") return "la ESC parte dalla <b>TTE da sola</b>: la V/Q solo con probabilità di PH alta, o intermedia con almeno uno fra NT-proBNP elevato, fattori di rischio della Tab. 13 e CPET anormale; altrimenti si cercano le cause alternative della dispnea";
+    if (V.q === "no" && V.L === "bassa") return "con probabilità ecocardiografica <b>bassa</b> la Fig. 8 ESC <b>non prevede la V/Q</b>: si cercano le cause alternative della dispnea, considerando il CPET (nota f)";
+    if (V.q === "no") return "con probabilità <b>intermedia</b> e senza NT-proBNP elevato, fattori di rischio della Tab. 13 o CPET anormale, la Fig. 8 ESC <b>non prevede la V/Q</b>: si cercano le cause alternative della dispnea";
+    return "con probabilità <b>intermedia</b> la V/Q si fa solo se c'è almeno uno fra NT-proBNP elevato, fattori di rischio della Tab. 13 (p. 584) e CPET anormale; qui restano da dire " + V.ign.join(", ") + ": senza nessuno dei tre, <b>niente V/Q</b> e cause alternative";
+  }
+
+  function escDiff(s, a, E) {
+    var L = [], P = s.perf || "nd", V;
+    if (a.stato === "asintomatico") {
+      if (s.rf === "si") L.push({ t:"Asintomatico <b>con</b> fattori di rischio per CTEPH (Tab. 13, p. 584): un'ulteriore valutazione <b>può essere considerata</b>, e la Fig. 8 ESC propone la TTE; AHA/ACC 2026 non ha una riga per questo caso", r:RE.asint, pg:"p. 587; Fig. 8, p. 586" });
+      else if (!s.rf) L.push({ t:"<b>Se</b> ci sono fattori di rischio per CTEPH (Tab. 13, p. 584 — al passo 6), nell'asintomatico un'ulteriore valutazione può essere considerata, con la TTE; AHA/ACC 2026 non ha una riga per questo caso", r:RE.asint, pg:"p. 587; Fig. 8, p. 586" });
+      return L;
+    }
+    if (a.stato !== "fig8") return L;
+    if (E.stato === "ok" && E.livelloEsc !== E.livello)
+      L.push({ t:"Con i soli segni della Suppl. Tab. 18 — che non contiene TAPSE/sPAP né l'arteria polmonare più larga della radice aortica — la probabilità ecocardiografica è <b>" + E.livelloEsc + "</b>, non " + E.livello, r:null, pg:"Suppl. Tab. 17–18, p. 15" });
+    if (P === "anom") {
+      if (a.passo !== "esperto")
+        L.push({ t:"Sintomatico con difetti di perfusione non concordanti oltre i 3 mesi: <b>invio al centro PH/CTEPH</b>, dopo aver considerato eco, peptidi natriuretici e CPET — <b>raccomandato</b>" + (a.esito === "esclusa" ? "; qui AHA/ACC 2026 esclude invece la CTEPD con il CPET" : "") + ". La ESC non usa il CPET per escludere", r:RE.invio, pg:"p. 587" });
+      else if (s.ph !== "si")
+        L.push({ t:"Non separa con o senza PH: ogni sintomatico con difetti non concordanti oltre i 3 mesi va al centro PH/CTEPH — <b>raccomandato</b>" + (s.ph === "no" ? "; AHA/ACC 2026, senza PH, lo dice utile solo in pazienti selezionati" : ""), r:RE.invio, pg:"p. 587" });
+      return L;
+    }
+    if (P === "norm") return L;  // perfusione normale: cause alternative anche per la ESC
+    V = escVq(s, E);
+    if (V.q === "si") return L;  // anche la ESC fa la V/Q
+    if (a.esito === "esclusa" && V.q === "no") return L;  // nessuna V/Q e cause alternative: stessa decisione
+    L.push({ t:(a.esito === "esclusa" ? "Il CPET non esclude la CTEPD: " : "") + vqTesto(V), r:null, pg:"Fig. 8, p. 586; p. 587" });
+    return L;
+  }
+
+  /* ═══ STATO E DISEGNO ═════════════════════════════════════════════════ */
+  function el(id) { return document.getElementById(id); }
+  function ck(id) { var e = el(id); return !!(e && e.checked); }
+  function num(id) {
+    var e = el(id); if (!e) return null;
+    var v = String(e.value).replace(",", ".").trim();
+    if (v === "") return null;
+    var n = parseFloat(v);
+    return isFinite(n) ? n : null;
+  }
+  function radio(n) { var e = document.querySelector('input[name="' + n + '"]:checked'); return e ? e.value : ""; }
+  function pgs(p) { return ' <span class="pg">' + p + "</span>"; }
+  function fmt(x) { return String(x).replace(".", ","); }
+  var ETI = { "1":"1", "2a":"2a", "2b":"2b", "3nb":"3: No Benefit", "3h":"3: Harm" };
+  function pA(r) { return '<span class="cor cor-' + r[0] + '">' + ETI[r[0]] + '</span>&#8288; <span class="loe">' + r[1] + "</span>" + pgs("AHA/ACC 2026, " + r[2]); }
+  function pE(r) { var k = { "I":"1", "IIa":"2a", "IIb":"2b", "III":"3h" }[r[0]]; return '<span class="cor cor-' + k + '">' + r[0] + '</span>&#8288; <span class="loe">' + r[1] + "</span>"; }
+  var SENZA = '<span class="cor cnc">senza classe</span>';
+  function nota(g, t) { return '<div class="nota ' + (g || "") + '">' + t + "</div>"; }
+  function chip(k, t) { return '<span class="cat ' + k + '">' + t + "</span>"; }
+  function riga(cls, ico, t) { return '<div class="riga ' + cls + '"><span class="ico">' + ico + '</span><span class="tx">' + t + "</span></div>"; }
+  var ICO = { si:"→", cond:"?", no:"·" }, CLS = { si:"si", cond:"nd", no:"no" };
+  function rA(st, r, t) { return riga(CLS[st], ICO[st], t + " " + pA(r)); }
+  function nomeLiv(E) { return E.livello === "bassa" ? "bassa" : "più alta · " + E.livello; }
+
+  function S() {
+    var s = {
+      tempo:radio("tempo"), sint:radio("sint"), emo:ck("emo"),
+      cpet:radio("cpet"), perf:radio("perf"), ecoSt:radio("ecoSt"),
+      trv:num("trv"), trvNm:ck("trvNm"), ph:radio("ph"),
+      ntpro:radio("ntpro"), rf:radio("rf")
+    };
+    for (var i = 0; i < SEGNI.length; i++) s[SEGNI[i].id] = ck(SEGNI[i].id);
+    return s;
+  }
+
+  function disegna() {
+    var s = pulisci(S()), E = eco(s), a = percorso(s, E), i;
+    var fig8 = a.stato === "fig8";
+    el("blkEsami").className = fig8 ? "" : "hide";
+    el("blkEco").className = s.ecoSt === "fatta" ? "" : "hide";
+    el("blkPh").className = fig8 && (a.esperto || a.passo === "espertoOcpet") ? "" : "hide";
+    var chks = document.querySelectorAll(".chk");
+    for (i = 0; i < chks.length; i++) { var inp = chks[i].querySelector("input"); chks[i].className = "chk" + (inp && inp.checked ? " on" : ""); }
+
+    /* (a) il ramo della figura */
+    var h = "<h3>Il ramo della Fig. 8 — AHA/ACC 2026, p. e1028</h3>", bc = ["kx", "—"];
+    if (!a.stato) {
+      h += '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + a.perche + "</span></div>";
+    } else if (a.stato === "asintomatico") {
+      h += '<div class="esito">' + chip("kx", "nessuna valutazione per la CTEPD") + '<span class="muted">la Fig. 8 parte dai sintomi persistenti</span></div>';
+      bc = ["kx", "non indicata"];
+    } else if (a.stato === "presto") {
+      h += '<div class="esito">' + chip("kx", "prima dei 3 mesi") + '<span class="muted">la Fig. 8 parte a ≥3 mesi di anticoagulazione terapeutica</span></div>';
+      bc = ["kx", "a 3 mesi"];
+    } else {
+      h += '<div class="via">' + a.via.join(" → ") + "</div>";
+      var ES = { esclusa:["k0", "CTEPD esclusa"], possibile:["k2", "CTEPD possibile"], probabile:["k4", "CTEPD probabile"], possProb:["k3", "CTEPD possibile o probabile"] }[a.esito];
+      if (ES) {
+        h += '<div class="esito"><span class="big">' + ES[1] + "</span>" + (a.lettura ? chip("k3", "lettura nostra") : "") + "</div>";
+        bc = [ES[0], ES[1].replace("CTEPD ", "") + (a.lettura ? " · lettura nostra" : "")];
+        if (a.escluBy === "cpetTop") h += riga("si", "→", "Il CPET non trova una limitazione vascolare polmonare: CTEPD esclusa, senza imaging — riquadro colorato 2a nella figura " + pA(R.cpet));
+        if (a.escluBy === "cpetBasso") h += riga("si", "→", "Nel ramo «possibile» il CPET non trova una limitazione vascolare: CTEPD esclusa " + pA(R.cpet));
+        if (a.escluBy === "perf") h += riga("si", "→", "La perfusione normale basta a escludere la CTEPD: il valore predittivo negativo della V/Q planare si avvicina al 100% (p. e1026) " + pA(R.tteperf));
+        if (a.esito === "possibile" && a.passo === "espertoOcpet") h += riga("si", "→", "Perfusione anomala con eco a bassa probabilità: <b>CTEPD possibile</b>" + pgs("AHA/ACC 2026, Fig. 8, p. e1028"));
+        if (a.esito === "probabile") h += riga("si", "→", "Perfusione anomala con eco a probabilità più alta: <b>CTEPD probabile</b>" + pgs("AHA/ACC 2026, Fig. 8, p. e1028"));
+        if (a.senzaEco) h += nota("info", "Senza l'eco la figura non separa possibile e probabile, ma qui non serve: con la perfusione anomala e la limitazione vascolare al CPET entrambi i rami portano alla valutazione esperta" + pgs("Fig. 8, p. e1028") + ".");
+      } else {
+        h += '<div class="esito">' + chip(a.lettura ? "k3" : "kx", a.lettura ? "non ancora esclusa · lettura nostra" : "—") + '<span class="muted">' + (a.perche || "") + "</span></div>";
+        bc = a.lettura ? ["k3", "non esclusa · lettura nostra"] : ["kx", "—"];
+      }
+      if (a.lettura) h += nota("", "<b>Lettura nostra.</b> La figura non prevede questa combinazione di esami: lo strumento segue la strada più prudente e lo dice nelle incoerenze, qui sotto.");
+    }
+    el("outPerc").innerHTML = h;
+
+    /* (b) il passo successivo */
+    var PB = { ingresso:"CPET o TTE + perfusione", perfOcpet:"perfusione o CPET", tteperf:"TTE + perfusione", perf:"perfusione", tte:"TTE",
+               espertoOcpet:"esperto o CPET", esperto:"valutazione esperta", altreCause:"altre cause · riabilitazione",
+               nessunImaging:"nessun imaging", a3mesi:"rivalutare a 3 mesi" };
+    var PK = { esperto:"k4", espertoOcpet:"k3", altreCause:"k0", nessunImaging:"k0", a3mesi:"kx" };
+    var hp = "<h3>Che cosa fare adesso</h3>", C = s.cpet || "nd";
+    switch (a.passo) {
+      case "ingresso":
+        hp += rA("si", R.cpet, "<b>CPET non invasivo</b>: senza limitazione vascolare polmonare la CTEPD è esclusa");
+        hp += rA("si", R.tteperf, "<b>oppure TTE e scintigrafia perfusionale insieme</b> (V/Q planare, V/Q SPECT o SPECT/TC)");
+        hp += nota("info", "La figura ha due ingressi, entrambi «ragionevoli», e non dice quale preferire" + pgs("Fig. 8, p. e1028") + ".");
+        break;
+      case "perfOcpet":
+        hp += rA("si", R.tteperf, "<b>Scintigrafia perfusionale</b> (V/Q planare, V/Q SPECT o SPECT/TC): la TTE " + (E.stato === "omessa" ? "si può omettere, perché era normale all'EP acuta" : "c'è già"));
+        hp += rA("si", R.cpet, "oppure <b>prima il CPET</b>, l'altro ingresso della figura");
+        break;
+      case "tteperf":
+        hp += rA("si", R.tteperf, "Limitazione vascolare al CPET: la figura porta a <b>TTE e scintigrafia perfusionale</b>");
+        break;
+      case "perf":
+        if (a.conflitto === "cpetEco") hp += riga("nd", "?", "<b>Scintigrafia perfusionale</b> prima di considerare esclusa la CTEPD: con l'eco a probabilità più alta, normale la esclude, anomala la rende probabile — lettura nostra, vedi le incoerenze " + pA(R.tteperf));
+        else hp += rA("si", R.tteperf, "Manca la <b>scintigrafia perfusionale</b>: normale esclude la CTEPD, anomala la rende possibile o probabile secondo l'eco");
+        break;
+      case "tte":
+        if (C === "no") hp += riga("si", "→", "Serve la <b>TTE</b> con la probabilità di PH: con eco a bassa probabilità il CPET senza limitazione esclude la CTEPD (ramo «possibile»); con eco a probabilità più alta la CTEPD è probabile, e in quel ramo il CPET non entra" + pgs("AHA/ACC 2026, Fig. 8, p. e1028"));
+        else {
+          hp += rA("si", R.tteperf, "Serve la <b>TTE</b> con la probabilità di PH: separa la CTEPD possibile (eco bassa) dalla probabile (eco più alta)");
+          hp += rA("si", R.cpet, "oppure il <b>CPET</b>: con limitazione vascolare entrambi i rami portano alla valutazione esperta; senza, decide ancora l'eco");
+        }
+        if (E.stato === "omessa") hp += nota("", "L'eco si può omettere quando era normale all'EP acuta (nota * delle raccomandazioni, p. e1026), ma con la perfusione anomala la figura ha bisogno della probabilità ecocardiografica per scegliere il ramo.");
+        if (E.stato === "incompleta") hp += nota("", "L'eco c'è, ma senza il TRV la probabilità non si assegna: indicarlo, o segnarlo non misurabile.");
+        break;
+      case "espertoOcpet":
+        hp += riga("si", "→", "<b>Valutazione esperta</b> subito: angiografia polmonare e cateterismo destro ± da sforzo" + pgs("AHA/ACC 2026, Fig. 8, p. e1028"));
+        hp += rA("si", R.cpet, "oppure <b>prima il CPET</b>: senza limitazione vascolare la CTEPD è esclusa; con limitazione, valutazione esperta");
+        hp += nota("info", "La figura lascia aperte le due strade dalla CTEPD possibile, e non dice quale preferire" + pgs("Fig. 8, p. e1028") + ".");
+        break;
+      case "esperto":
+        hp += riga("si", "→", "<b>Valutazione esperta</b> in un centro con esperienza nella CTEPD: <b>angiografia polmonare</b>, TC o invasiva a scelta del clinico secondo l'esperienza del centro, e <b>cateterismo destro</b>, anche da sforzo. È lì che si separa la CTEPD con PH da quella senza" + pgs("AHA/ACC 2026, Fig. 8 e nota ‖, pp. e1028–e1029"));
+        break;
+      case "altreCause":
+        hp += riga("si", "→", "<b>Cercare le altre cause</b> dei sintomi: esclusa la CTEPD, vanno comunque indagate" + pgs("AHA/ACC 2026, nota † della Fig. 8, p. e1028"));
+        hp += rA("si", R.riab, "Se dispnea o limitazione persistono: <b>riabilitazione polmonare</b>, per sintomi e tolleranza allo sforzo — la frase dice «ragionevole», la griglia 1 (vedi le incoerenze)");
+        if (E.stato === "ok" && E.ramo === "alta" && a.escluBy === "perf") hp += nota("", "L'eco a probabilità di PH più alta resta un dato da spiegare fra le altre cause (nota †): la diagnosi dell'ipertensione polmonare è fuori da questo strumento.");
+        break;
+      case "nessunImaging":
+        hp += rA("si", R.controllo, "Sintomi risolti e basso sospetto di CTEPD: <b>nessuna angio-TC né scintigrafia di controllo</b> per vedere quanto il trombo si è risolto — <b>non utile</b>");
+        hp += nota("info", "L'angio-TC non serve nemmeno a decidere la durata dell'anticoagulazione" + pgs("AHA/ACC 2026, p. e1029") + ". Se i sintomi tornano, lo strumento riparte da «persistono».");
+        break;
+      case "a3mesi":
+        hp += rA("cond", R.valuta, "La valutazione per la CTEPD è raccomandata dopo <b>≥3 mesi</b> di anticoagulazione terapeutica: <b>rivalutare allora</b>");
+        hp += nota("info", "L'ostruzione vascolare dopo l'EP acuta non cambia dopo i 3 mesi: aspettare oltre ritarda soltanto la diagnosi" + pgs("AHA/ACC 2026, p. e1026") + ".");
+        hp += nota("", "Sintomi nuovi o in peggioramento: prima si esclude una recidiva" + pgs("AHA/ACC 2026, p. e1029; recidiva in terapia, p. e1024") + " — fuori da questo strumento.");
+        break;
+      default:
+        hp += '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + (a.perche || "") + "</span></div>";
+    }
+    if (fig8 && (a.esperto || a.passo === "espertoOcpet")) {
+      hp += rA(s.ph === "no" ? "no" : "si", R.espPh, "CTEPD <b>con</b> PH: invio a un centro con esperienza nella CTEPD — <b>raccomandato</b>");
+      hp += rA(s.ph === "si" ? "no" : (s.ph === "no" ? "si" : "cond"), R.espNoPh, "CTEPD <b>senza</b> PH, in pazienti <b>selezionati</b>: invio al centro esperto — <b>può essere utile</b>");
+      if (!s.ph) hp += nota("info", "La PH si documenta al cateterismo destro della valutazione esperta: per questo la figura porta le due classi insieme, «oppure». Se il cateterismo è già stato fatto, indicalo al passo 5.");
+      if (s.ph !== "si") hp += nota("", "Senza PH molti pazienti con malattia lieve non traggono beneficio da angioplastica o endoarterectomia, e la prognosi può essere benigna: l'invio non serve a tutti" + pgs("AHA/ACC 2026, p. e1029") + ".");
+      hp += nota("confine", "<b>CONFINE · ipertensione polmonare.</b> La diagnosi della CTEPH — la definizione emodinamica al cateterismo — e la terapia, endoarterectomia, angioplastica con palloncino, farmaci, sono della linea guida sull'ipertensione polmonare (ESC/ERS 2022): lo strumento si ferma all'invio.");
+    }
+    el("outPasso").innerHTML = hp;
+
+    /* (c) la probabilita' ecocardiografica */
+    var he = "<h3>Probabilità ecocardiografica di PH — nota § della Fig. 8, Tab. 10</h3>", be = ["kx", "—"];
+    if (!fig8) he += '<div class="esito">' + chip("kx", "—") + '<span class="muted">entra solo nel percorso della Fig. 8</span></div>';
+    else if (E.stato === "nd") he += '<div class="esito">' + chip("kx", "—") + '<span class="muted">TTE non eseguita</span></div>';
+    else if (E.stato === "omessa") { he += '<div class="esito">' + chip("kx", "omessa") + '<span class="muted">era normale all\'EP acuta: ripeterla a 3–6 mesi rende poco e si può omettere (nota * delle raccomandazioni, p. e1026)</span></div>'; be = ["kx", "omessa"]; }
+    else if (E.stato === "incompleta") he += '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + E.perche + "</span></div>";
+    else {
+      var KL = { bassa:"k0", intermedia:"k2", alta:"k4" }[E.livello];
+      he += '<div class="esito"><span class="big">' + (E.ramo === "bassa" ? "bassa probabilità" : "probabilità più alta") + "</span>" + chip(KL, E.livello) + "</div>";
+      he += riga("si", "·", "TRV: <b>" + (E.nm ? "non misurabile" : fmt(E.trv) + " m/s") + "</b> — fascia <b>" + { le28:"≤2,8 o non misurabile", mid:"2,9–3,4", gt34:"&gt;3,4" }[E.fascia] + "</b>" + pgs("ESC 2019, Suppl. Tab. 17, p. 15"));
+      he += riga("si", "·", "Categorie con almeno un segno: <b>" + (E.cat.length ? E.cat.join(", ") : "nessuna") + "</b> (" + E.cat.length + " su 3) — " + (E.segni ? "<b>segni di PH presenti</b>" : "<b>nessun segno che conti</b>: ne servono da almeno due categorie") + pgs("AHA/ACC 2026, Tab. 10, p. e1029"));
+      he += riga("si", "·", "Livello <b>" + E.livello + "</b>" + (E.fascia === "gt34" ? ", i segni non servono sopra 3,4" : "") + " → ramo della Fig. 8: <b>" + (E.ramo === "bassa" ? "eco a bassa probabilità" : "eco a probabilità più alta") + "</b>" + pgs("ESC 2019, Suppl. Tab. 17; AHA/ACC 2026, nota § della Fig. 8, pp. e1028–e1029"));
+      he += riga(E.fuoriLettera ? "nd" : "si", E.fuoriLettera ? "?" : "·", "Nella definizione letterale della nota §: " + (E.lettBassa ? "<b>bassa</b> (TRV ≤2,8 e nessun segno)" : E.lettAlta ? "<b>più alta</b> (TRV ≥2,8 e segni)" : "<b>nessuna delle due</b> — vedi le incoerenze"));
+      if (E.trv !== null && E.trv > TRV.alto) he += nota("info", "TRV &gt;3,4 m/s: probabilità alta con o senza altri segni" + pgs("ESC 2019, Suppl. Tab. 17, p. 15") + ".");
+      be = [KL, nomeLiv(E)];
+    }
+    if (fig8 && s.trvIgnorato) he += nota("", "TRV segnato <b>non misurabile</b>: il valore scritto nel campo è ignorato.");
+    if (s.fuoriDom.length) he = nota("stop", "<b>Valore fuori dominio, ignorato:</b> TRV (atteso 1–6 m/s). Lo strumento lo tratta come non inserito.") + he;
+    el("outEco").innerHTML = he;
+
+    /* (d) raccomandazioni che accompagnano */
+    var hr = "<h3>Le raccomandazioni che accompagnano il percorso — pp. e1025–e1026</h3>";
+    if (!a.stato) hr += '<div class="esito">' + chip("kx", "—") + '<span class="muted">' + a.perche + "</span></div>";
+    else if (a.stato === "asintomatico") {
+      hr += rA("no", R.valuta, "La valutazione per la CTEPD è per chi ha dispnea o limitazione funzionale persistenti");
+      hr += rA("si", R.controllo, "Imaging di controllo senza sintomi: <b>non utile</b>");
+    } else if (a.stato === "presto") {
+      hr += rA("cond", R.valuta, "Valutazione per la CTEPD: dopo ≥3 mesi di anticoagulazione terapeutica");
+    } else {
+      hr += rA("si", R.valuta, "Dispnea e/o limitazione funzionale dopo ≥3 mesi di anticoagulazione terapeutica: la <b>valutazione diagnostica per la CTEPD</b> è <b>raccomandata</b>");
+      hr += rA("si", R.tteperf, "<b>TTE e scintigrafia perfusionale</b> insieme, piuttosto che il solo ecocardiogramma, per escludere la CTEPD o decidere se servono altri esami — <b>ragionevole</b>");
+      hr += nota("info", "La TTE da sola non basta né a includere né a escludere la CTEPD: in uno studio un terzo dei pazienti con CTEPH aveva una TTE normale, e molti con TTE anormale non sviluppano la CTEPD" + pgs("AHA/ACC 2026, p. e1026") + ".");
+      hr += rA(C === "nd" ? "cond" : "si", R.cpet, "<b>CPET non invasivo</b> per escludere la CTEPD — <b>ragionevole</b>");
+      if (C !== "nd") hr += nota("info", "La capacità del CPET di diagnosticare o escludere la CTEPD non è stabilita e le sue soglie per escluderla non sono definite; il VO₂ di picco da solo non basta; il VE/VCO₂ fa da sostituto dello spazio morto, con la verifica di un esame più definitivo" + pgs("AHA/ACC 2026, p. e1027") + ".");
+      if (a.esito !== "esclusa")
+        hr += rA(s.emo ? "cond" : "si", R.anticoag, "<b>Proseguire l'anticoagulazione</b> fino alla fine della valutazione, anche con un fattore scatenante transitorio, per prevenire recidiva e progressione della CTEPD — <b>raccomandato</b>" + (s.emo ? "; la raccomandazione fa eccezione per l'<b>alto rischio emorragico</b>, qui segnato: la decisione è clinica" : ""));
+      else hr += nota("info", "Valutazione per la CTEPD conclusa: la prosecuzione dell'anticoagulazione torna alla decisione sulla durata" + pgs("AHA/ACC 2026, Tab. 9, p. e1023") + ", fuori da questo strumento.");
+      if (a.esito === "esclusa") hr += rA("si", R.riab, "CTEPD esclusa, dispnea o limitazione persistenti: <b>riabilitazione polmonare</b> — la frase dice <b>«ragionevole»</b>");
+    }
+    el("outRacc").innerHTML = hr;
+
+    /* (e) ESC 2019, solo le differenze */
+    var D = escDiff(s, a, E), hd = "";
+    for (i = 0; i < D.length; i++) hd += riga("esc", "ESC", D[i].t + " " + (D[i].r ? pE(D[i].r) : SENZA) + pgs("ESC 2019, " + D[i].pg));
+    el("outEsc").innerHTML = hd || '<p class="muted" style="font-size:13px">Nessuna differenza di decisione, per questo caso.</p>';
+
+    /* (f) incoerenze e lacune */
+    var I = [];
+    if (fig8 && E.stato === "ok" && E.e28)
+      I.push("<b>TRV esattamente 2,8 m/s.</b> La nota § della Fig. 8 lo mette in tutte e due le definizioni: bassa probabilità con TRV ≤2,8 e nessun segno, probabilità più alta con TRV ≥2,8 e segni. Qui decidono i segni, che le due definizioni separano: " + (E.segni ? "con segni da almeno due categorie la probabilità è <b>più alta</b>" : "senza segni da almeno due categorie la probabilità è <b>bassa</b>") + ". La Suppl. Tab. 17 ESC 2019 mette 2,8 nella fascia «≤2,8», con lo stesso esito." + pgs("AHA/ACC 2026, nota §, p. e1028; ESC 2019, Suppl. Tab. 17, p. 15"));
+    if (fig8 && E.stato === "ok" && E.fuoriLettera)
+      I.push("<b>Un'eco che la nota § non definisce.</b> " + (E.nm ? "TRV non misurabile" : "TRV " + fmt(E.trv) + " m/s") + (E.segni ? " con segni da almeno due categorie" : " senza segni da almeno due categorie") + " non rientra né nella bassa probabilità (TRV ≤2,8 e nessun segno) né nella più alta (TRV ≥2,8 e segni). La continuazione della nota, a p. e1029, dice che l'eco «a probabilità più alta» è la probabilità <b>intermedia o alta</b> dei criteri ERS 2022, e quella bassa la bassa: lo strumento legge così, con le fasce della Suppl. Tab. 17 ESC 2019 (≤2,8 o non misurabile · 2,9–3,4 · &gt;3,4), le stesse della ESC/ERS 2022. Qui: <b>" + E.livello + "</b>, ramo " + (E.ramo === "bassa" ? "a bassa probabilità" : "a probabilità più alta") + "." + pgs("AHA/ACC 2026, nota § e sua continuazione, pp. e1028–e1029; ESC 2019, Suppl. Tab. 17, p. 15"));
+    if (fig8 && E.stato === "ok" && E.tra)
+      I.push("<b>TRV fra 2,8 e 2,9 m/s.</b> Le fasce della Suppl. Tab. 17 sono a un decimale (≤2,8 · 2,9–3,4) e non coprono " + fmt(E.trv) + ": lo strumento lo mette nella fascia 2,9–3,4, perché supera la soglia di 2,8 — lettura nostra." + pgs("ESC 2019, Suppl. Tab. 17, p. 15"));
+    if (fig8 && a.esito === "esclusa")
+      I.push("<b>Riabilitazione polmonare: classe e parole non coincidono.</b> Nella griglia la raccomandazione n. 6 è 1 B-R, ma la frase dice «is reasonable», la formula della classe 2a. Lo strumento mostra la classe della griglia e la parola della frase." + pgs("AHA/ACC 2026, p. e1026, n. 6"));
+    if (a.escluBy === "perf" || a.escluBy === "cpetBasso")
+      I.push("<b>Il colore del riquadro «CTEPD esclusa».</b> Nella figura è colorato 2a solo dopo il CPET del primo ingresso; " + (a.escluBy === "perf" ? "dopo la perfusione normale" : "dopo il CPET del ramo «possibile»") + " il riquadro è senza colore. Lo strumento mostra la classe dell'esame che esclude: " + (a.escluBy === "perf" ? "TTE con perfusione, n. 2" : "CPET, n. 3") + ", 2a B-NR." + pgs("AHA/ACC 2026, Fig. 8, p. e1028; p. e1025"));
+    if (a.conflitto === "cpetPerfEco")
+      I.push("<b>CPET senza limitazione vascolare, ma perfusione anomala ed eco a probabilità più alta.</b> Se il CPET è stato il primo esame, la figura si ferma lì: CTEPD esclusa (2a). Partendo da TTE e perfusione, questi due reperti danno «CTEPD probabile», un ramo in cui il CPET non entra. La figura non dice quale prevalga. Lo strumento segue il ramo della perfusione, <b>CTEPD probabile e valutazione esperta</b>: è la lettura più prudente, e la fonte scrive che la capacità del CPET di escludere la CTEPD non è stabilita — lettura nostra." + pgs("AHA/ACC 2026, Fig. 8, p. e1028; p. e1027"));
+    if (a.conflitto === "cpetEco")
+      I.push("<b>CPET senza limitazione vascolare, ma eco a probabilità più alta.</b> Nel primo ingresso della figura il CPET negativo esclude la CTEPD (2a) senza eco né perfusione; nell'altro, con l'eco a probabilità più alta decide la perfusione: normale esclude, anomala rende la CTEPD probabile. La figura non prevede i due esami insieme. Lo strumento chiede la <b>perfusione</b> prima di chiudere: è la lettura più prudente, perché la capacità del CPET di escludere la CTEPD non è stabilita — lettura nostra." + pgs("AHA/ACC 2026, Fig. 8, p. e1028; p. e1027"));
+    var hi = "";
+    for (i = 0; i < I.length; i++) hi += nota("", I[i]);
+    el("outInc").innerHTML = hi || '<p class="muted" style="font-size:13px">Nessuna, per questo caso.</p>';
+
+    /* (g) limiti */
+    var lim = [];
+    lim.push("Lo strumento parte dai <b>sintomi persistenti dopo un'EP acuta</b> e si ferma all'<b>invio</b>: la diagnosi della CTEPH — la definizione emodinamica al cateterismo — e la terapia sono dell'ipertensione polmonare (ESC/ERS 2022).");
+    lim.push("«≥3 mesi» sono di anticoagulazione terapeutica dopo l'EP acuta" + pgs("AHA/ACC 2026, p. e1025, n. 1") + "; la ESC 2019 fa la visita a 3–6 mesi" + pgs("ESC 2019, p. 587") + ".");
+    if (fig8) {
+      lim.push("La limitazione vascolare polmonare al CPET è la lettura del laboratorio: la fonte la definisce (nota *) ma non dà soglie per escludere la CTEPD" + pgs("AHA/ACC 2026, p. e1027") + ".");
+      lim.push("I segni ecocardiografici si spuntano: lo strumento non calcola il TAPSE/sPAP né altri rapporti dalle misure. La PH non si deduce dall'eco: «con» o «senza» PH si decide al cateterismo destro.");
+      lim.push("La perfusione è la scintigrafia (V/Q planare, V/Q SPECT, SPECT/TC). L'angio-TC entra solo dove la perfusione non è disponibile" + pgs("AHA/ACC 2026, p. e1029") + " e la figura non ne ha il ramo; per la ESC non esclude da sola la CTEPH" + pgs("ESC 2019, p. 584") + ".");
+      lim.push("Il limite di plausibilità del TRV (1–6 m/s) è dello strumento, non della fonte.");
+    }
+    el("limiti").innerHTML = "<li>" + lim.join("</li><li>") + "</li>";
+
+    function bar(id, x) { var e = el(id); e.className = "cat " + x[0]; e.innerHTML = x[1]; }
+    bar("barCtepd", bc);
+    bar("barPasso", a.passo ? [PK[a.passo] || "k1", PB[a.passo]] : ["kx", "—"]);
+    bar("barEco", be);
+  }
+
+  document.addEventListener("input", disegna);
+  document.addEventListener("change", disegna);
+  el("azzera").addEventListener("click", function () {
+    var ins = document.querySelectorAll("input");
+    for (var i = 0; i < ins.length; i++) {
+      if (ins[i].type === "checkbox" || ins[i].type === "radio") ins[i].checked = false;
+      else ins[i].value = "";
+    }
+    disegna();
+    window.scrollTo(0, 0);
+  });
+
+  window.CTEPD_MOTORE = {
+    eco:function (s) { return eco(pulisci(s)); },
+    percorso:function (s) { var c = pulisci(s); return percorso(c, eco(c)); }
+  };
+  disegna();
+})();
+</script>
+<script data-iphone="web">
+// Solo da un indirizzo https, cioe' dalla pagina pubblicata: aperto come file
+// il tool non cerca ne' manifest ne' service worker, che accanto al file non
+// ci sono. Un errore qui non deve fermare niente: e' un di piu'.
+(function(){
+if(location.protocol!=="https:") return;
+try{
+  var t=document.getElementsByTagName("head")[0];
+  var m=document.createElement("link"); m.rel="manifest"; m.href="manifest.webmanifest";
+  var i=document.createElement("link"); i.rel="apple-touch-icon"; i.href="icona-180.png";
+  t.appendChild(m); t.appendChild(i);
+  if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js")["catch"](function(){});
+}catch(e){}
+})();
+</script>
+<script data-iphone="fine">document.documentElement.className+=" motore-ok";</script>
+</body>
+</html>
